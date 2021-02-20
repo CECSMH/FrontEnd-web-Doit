@@ -13,7 +13,6 @@ const id = 'Web_' + uuid();
 
 function SyncPage() {
 
-    console.log(id)
     // function to get mac based on qrcode captured from cellphone
     async function getMac() {
         await Api.get(`/task/sync/pc/${id}`).then(r => {
