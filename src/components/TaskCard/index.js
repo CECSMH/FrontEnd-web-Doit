@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { format } from 'date-fns';
 import IconsArray from '../../utils/icons';
 import * as Styles from './styles';
@@ -9,10 +9,6 @@ import done from '../../assets/done.png';
 //receive 4 parameters from the homes
 function TaskCard({title, type, when, status}) {
 
-  // split and format date and hour respectively
-  const date = useMemo(() => format(new Date(when), 'dd/MM/yyyy'));
-  const hour = useMemo(() => format(new Date(when), 'HH:mm'));
-
   return (
     <Styles.Container>
         <div id="top">
@@ -20,9 +16,9 @@ function TaskCard({title, type, when, status}) {
             <p>{title}</p>
         </div>
         <div id="bottom">
-            <strong>{date}</strong>
+            <strong>{format(new Date(when), 'dd/MM/yyyy')}</strong>
             <span>
-              {status ? <img src={done} alt="Completo"/> : null}{hour}
+              {status ? <img src={done} alt="Completo"/> : null}{format(new Date(when), 'HH:mm')}
             </span>
         </div>
     </Styles.Container>

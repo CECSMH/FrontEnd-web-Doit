@@ -1,5 +1,5 @@
 import axios from 'axios';
 
-const Api = axios.create({baseURL: 'http://localhost:8080'});
+const Api = axios.create({baseURL: 'http://doit-web-app-com.umbler.net'});
 
 export default Api

@@ -8,40 +8,40 @@ import Footer from '../../components/Footer/index';
 import Api from '../../services/Api';
 import ConnectedVerify from '../../utils/connectedVerify';
 
-const id = uuid();
+const id = 'Web_' + uuid();
 
 
-function SyncPage(){
+function SyncPage() {
 
     console.log(id)
     // function to get mac based on qrcode captured from cellphone
-    async function getMac(){
+    async function getMac() {
         await Api.get(`/task/sync/pc/${id}`).then(r => {
-            if(!(r.data.mac === "not_yet" || r.data.mac === undefined)){
+            if (!(r.data.mac === "not_yet" || r.data.mac === undefined)) {
                 localStorage.setItem('@doit/mac', r.data.mac)
                 window.location.reload();
             }
-          })
+        })
     }
-    
-    return(
+
+    return (
         <Styles.Container>
 
-            {ConnectedVerify && <Redirect to="/"/>}
+            {ConnectedVerify && <Redirect to="/" />}
 
-            <Header sync="syncpage"/>
+            <Header sync="syncpage" />
 
             <div id="content">
                 <h2>CAPTURE O QRCODE ATRAVEZ DO APP</h2>
                 <Styles.Code>
-                    
-                   <button type="button" onClick={getMac}><QrCode value={id} size={350} /></button>
-                    
+
+                    <button type="button" onClick={getMac}><QrCode value={id} size={350} /></button>
+
                 </Styles.Code>
                 <p>suas tarefas serão sincronizadas com as do seu smartphone</p>
             </div>
-            
-            <Footer/>
+
+            <Footer />
         </Styles.Container>
     )
 }

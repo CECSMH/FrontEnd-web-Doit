@@ -9,13 +9,13 @@ import clock from '../../assets/clock.png';
 
 import * as Styles from './styles';
 import Api from '../../services/Api';
-import { format } from 'date-fns';
+import { format, isPast } from 'date-fns';
 import ConnectedVerify from '../../utils/connectedVerify'; // localstorage from browser
 
 
 function TaskPage({ match }) {
   //states to store data before edit or create
-  const [didMount, setDidMount] = useState(false); 
+  const [didMount, setDidMount] = useState(false);
   const [type, setType] = useState();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState();
@@ -51,6 +51,8 @@ function TaskPage({ match }) {
       return window.alert("A descrição é obrigatoria!")
     } else if (!date) {
       return window.alert("A data é obrigatoria!")
+    } else if (isPast(new Date(date))) {
+      return window.alert("Escolha uma data no futuro!")
     } else if (!time) {
       return window.alert("A hora é obrigatoria!")
     } else {
@@ -149,19 +151,21 @@ function TaskPage({ match }) {
           </div>
         </Styles.Mid>
 
-        <Styles.Bottom>
+        {match.params.id &&
+          <Styles.Bottom>
 
-          <label>
-            <input id="toggle" type="checkbox" checked={status} className="switch shadow" onChange={() => setStatus(!status)} />
-            <label htmlFor="toggle"></label>
-            <span>COMCLUÍDA</span>
-          </label>
+            <label>
+              <input id="toggle" type="checkbox" checked={status} className="switch shadow" onChange={() => setStatus(!status)} />
+              <label htmlFor="toggle"></label>
+              <span>COMCLUÍDA</span>
+            </label>
 
-          <label>
-            {match.params.id && <button onClick={Delete}>EXCLUIR TAREFA</button>}
-          </label>
+            <label>
+              <button onClick={Delete}>EXCLUIR TAREFA</button>
+            </label>
 
-        </Styles.Bottom>
+          </Styles.Bottom>
+        }
 
         <button type="button" id="save" onClick={() => Submit()}>SALVAR TAREFA</button>
 
